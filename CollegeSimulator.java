@@ -69,7 +69,8 @@ public class CollegeSimulator {
                 break;
             default:
                 System.out.println("Invalid option. Please restart the program and choose a valid option.");
-        }
+                System.out.println();
+            }
     }
 
     private static void simulateCompleteApplication(Scanner input, Random random) {
@@ -333,12 +334,23 @@ public class CollegeSimulator {
         break;
     }
     else if (option.equals("c")) {
-        ArrayList<Integer> rec = statsSimulator.recommendedColleges(GPA, SAT, ACT, essayStrength, extracurriculars); // HOW TO GET stats here (gpa, extracurriculars, etc));
-        for (int college : rec) {
-            colleges.add(college);
-            collegesLeft--;
+        ArrayList<Integer> rec = statsSimulator.recommendedColleges(GPA, SAT, ACT, essayStrength, extracurriculars);
+        
+        // Limit the number of recommended colleges to 12
+        int limit = Math.min(rec.size(), 12);
+        
+        if (limit > 0) {
+            ArrayList<Integer> limitedRec = new ArrayList<>(rec.subList(0, limit));
+    
+            for (int college : limitedRec) {
+                colleges.add(college);
+                collegesLeft--;
+            }
+        } else {
+            System.out.println("No recommended colleges found. Please consider other options.");
         }
     }
+    
     else {
         System.out.println("Invalid option. Please restart the program and choose a valid option.");
     }
@@ -537,32 +549,37 @@ public class CollegeSimulator {
         int myCollegeID = 0;
     boolean validInput = false;
 
-    while (!validInput) {
-    System.out.println("Which college would you like to attend? Pick the position of the college on this list: " + acceptedColleges);
-    System.out.println();
-
-    // Check if the input is an integer
-    if (scanner.hasNextInt()) {
-        myCollegeID = scanner.nextInt();
-
-        // Check if the input is within the bounds of the accepted colleges list
-        if (myCollegeID >= 1 && myCollegeID <= acceptedColleges.size()) {
-            validInput = true;  // Set the flag to exit the loop
+    while (!validInput && !acceptedColleges.isEmpty()) {
+        System.out.println("Which college would you like to attend? Pick the position of the college on this list: " + acceptedColleges);
+    
+        // Check if the input is an integer
+        if (scanner.hasNextInt()) {
+            myCollegeID = scanner.nextInt();
+    
+            // Check if the input is within the bounds of the accepted colleges list
+            if (myCollegeID >= 1 && myCollegeID <= acceptedColleges.size()) {
+                validInput = true;  // Set the flag to exit the loop
+            } else {
+                System.out.println("Invalid input. Please enter a valid position from the list.");
+            }
         } else {
-            System.out.println("Invalid input. Please enter a valid position from the list.");
+            System.out.println("Invalid input. Please enter a valid integer position from the list.");
+    
+            // Consume invalid input to avoid an infinite loop
+            scanner.nextLine(); // Change to nextLine() instead of next()
         }
+    }
+    
+    
+    if (validInput) {
+        System.out.println("You are now enrolled in " + acceptedColleges.get(myCollegeID - 1) + "! Congratulations!");
+        System.out.println();
     } else {
-        System.out.println("Invalid input. Please enter a valid integer position from the list.");
-        scanner.next();  // Consume invalid input to avoid an infinite loop
+        System.out.println("No colleges available. Exiting the selection process.");
     }
-}
-
-System.out.println("You are now enrolled in " + acceptedColleges.get(myCollegeID - 1) + "! Congratulations!");
-System.out.println();
-
-scanner.close();
-        
-    }
+    
+    // Remove the scanner.close() statement to avoid closing System.in
+    }    
 
     public static int getCollegeIdByName(String collegeName) {
     

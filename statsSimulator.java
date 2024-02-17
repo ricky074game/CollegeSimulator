@@ -156,92 +156,75 @@ public class statsSimulator {
                 colleges.add(rand.nextInt(10, 15));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(5, 10));
-            }
-        }
-        else if (num > 60) {
-            for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(28, 50));
-            }
-            for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(23, 28));
-            }
-            for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(18, 23));
-            }
-            for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(13, 18));
-            }
-            for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(8, 13));
+                colleges.add(rand.nextInt(3, 10));
             }
         }
         else if (num > 55) {
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(39, 55));
+                colleges.add(rand.nextInt(30, 50));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(29, 38));
+                colleges.add(rand.nextInt(25, 45));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(20, 28));
-            }
-            for (int i = 0; i < 2; i++) {
                 colleges.add(rand.nextInt(15, 20));
             }
             for (int i = 0; i < 2; i++) {
                 colleges.add(rand.nextInt(10, 15));
             }
+            for (int i = 0; i < 2; i++) {
+                colleges.add(rand.nextInt(3, 10));
+            }
         }
         else if (num > 50) {
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(40, 60));
+                colleges.add(rand.nextInt(35, 55));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(30, 40));
+                colleges.add(rand.nextInt(25, 45));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(25, 30));
+                colleges.add(rand.nextInt(20, 35));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(18, 25));
+                colleges.add(rand.nextInt(15, 20));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(10, 20));
+                colleges.add(rand.nextInt(7, 20));
             }
         }
         else if (num > 43) {
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(49, 70));
+                colleges.add(rand.nextInt(40, 70));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(38, 48));
+                colleges.add(rand.nextInt(30, 48));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(30, 38));
+                colleges.add(rand.nextInt(24, 38));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(25, 30));
+                colleges.add(rand.nextInt(20, 30));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(13, 24));
+                colleges.add(rand.nextInt(10, 24));
             }
         }
         else if (num > 33) {
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(63, 85));
+                colleges.add(rand.nextInt(55, 85));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(52, 62));
+                colleges.add(rand.nextInt(45, 62));
             }
             for (int i = 0; i < 3; i++) {
-                colleges.add(rand.nextInt(39, 52));
+                colleges.add(rand.nextInt(30, 52));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(30, 38));
+                colleges.add(rand.nextInt(25, 38));
             }
             for (int i = 0; i < 2; i++) {
-                colleges.add(rand.nextInt(17, 30));
+                colleges.add(rand.nextInt(14, 30));
             }
         }
         else if (num > 20) {
