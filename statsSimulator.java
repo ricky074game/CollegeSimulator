@@ -77,6 +77,10 @@ public class statsSimulator {
         int simulatedScore = Math.max(minRange, random.nextInt(maxRange - minRange + 1) + minRange);
         return simulatedScore;
     }
+
+    public static double simulateInterviewStrength(Random random) {
+        return Math.round((Math.max(random.nextDouble() * 10.0, random.nextDouble() * 10.0)) * 100.0) / 100.0;  // Simulate interview strength between 0.0 and 10.0
+    }
     
     public static double simulateScoreGPA(double GPA, Random random) {
         double minRange1 = Math.max(0.0, GPA - random.nextDouble() * 20.0);  // Adjusted range for 0-100
@@ -280,20 +284,18 @@ public class statsSimulator {
     public static ArrayList<Integer> fixDuplicates(ArrayList<Integer> colleges) {
         // Create a new ArrayList to store unique colleges in order
         ArrayList<Integer> uniqueColleges = new ArrayList<>();
-    
+        
         // Iterate through the original list and add unique colleges to the new list
         for (Integer college : colleges) {
             if (!uniqueColleges.contains(college)) {
                 uniqueColleges.add(college);
             }
         }
-    
-        // Clear the original list and add unique colleges back
-        colleges.clear();
-        colleges.addAll(uniqueColleges);
-    
-        return colleges;
+        
+        // Return the new list containing unique colleges
+        return uniqueColleges;
     }
+    
     
     
 }

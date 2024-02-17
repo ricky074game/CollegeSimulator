@@ -46,6 +46,7 @@ public class CollegeSimulator {
         Scanner input = new Scanner(System.in);
         Random random = new Random();
 
+        System.out.println();
         System.out.println("Welcome to the College Application Simulator!");
         System.out.println("Choose an option:");
         System.out.println("(a) Completely simulate the application");
@@ -85,28 +86,47 @@ public class CollegeSimulator {
         ArrayList<Integer> colleges = collegeApplications(input, GPA, SAT, ACT, extracurriculars, essayStrength);
         System.out.println();
 
-        simulateInterviewAndPrintResults(colleges, random, GPA, SAT, ACT, extracurriculars, essayStrength);
+        ArrayList<Double> interviewList = interviewList(colleges, random);
         System.out.println();
 
-        makeCollegeDecisions(colleges, name);
+        ArrayList<Double> admissionChanceList = new ArrayList<Double>();
+        admissionChanceList = printResults(colleges, GPA, SAT, ACT, extracurriculars, essayStrength, interviewList);
+        makeCollegeDecisions(colleges, name, admissionChanceList);
+
+        System.out.println();
+        System.out.println("Thank you for using the College Application Simulator!");
     }    
 
-    private static void simulateInterviewAndPrintResults(ArrayList<Integer> colleges, Random random,
+    private static ArrayList<Double> interviewList(ArrayList<Integer> colleges, Random random) {
+        ArrayList<Double> interviewStrengthList = new ArrayList<>();
+
+        for (Integer college : colleges) {
+            double interviewStrength = statsSimulator.simulateInterviewStrength(random);
+            interviewStrengthList.add(interviewStrength);
+
+        }
+        return interviewStrengthList;
+
+    }
+
+    private static ArrayList<Double> printResults(ArrayList<Integer> colleges,
                                                      double GPA, int SAT, int ACT,
-                                                     double extracurriculars, double essayStrength) {
+                                                     double extracurriculars, double essayStrength, ArrayList<Double> interviewList) {
     System.out.println("Simulating interview strength for each school:");
     
     // Separate lists for interview strengths and admission chances
     List<String> interviewStrengthList = new ArrayList<>();
     List<String> admissionChanceList = new ArrayList<>();
+    ArrayList<Double> chancesList = new ArrayList<>();
 
-    for (Integer college : colleges) {
-        double interviewStrength = simulateInterviewStrength(random);
-        interviewStrengthList.add(getCollegeById(college) + ": Interview Strength - " + interviewStrength);
+    for (int i = 0; i < colleges.size(); i++) {
+        double interviewStrength = interviewList.get(i);
+        interviewStrengthList.add(getCollegeById(colleges.get(i)) + ": Interview Strength - " + interviewStrength);
 
-        double admissionChance = collegeChances.chances(college, GPA, SAT, ACT, extracurriculars, essayStrength, interviewStrength);
+        double admissionChance = collegeChances.chances(colleges.get(i), GPA, SAT, ACT, extracurriculars, essayStrength, interviewStrength);
+        chancesList.add(admissionChance);
         String formattedChance = String.format("%.2f", admissionChance);
-        admissionChanceList.add(getCollegeById(college) + ": Admission Chance - " + formattedChance + "% || (" + collegeChances.getType(admissionChance) + ")");
+        admissionChanceList.add(getCollegeById(colleges.get(i)) + ": Admission Chance - " + formattedChance + "% || (" + collegeChances.getType(admissionChance) + ")");
     }
 
     // Print interview strengths
@@ -122,6 +142,8 @@ public class CollegeSimulator {
     }
 
     System.out.println();
+    return chancesList;
+
 }
 
     private static void simulateApplicationQuestions(Scanner input, Random random) {
@@ -137,11 +159,14 @@ public class CollegeSimulator {
         ArrayList<Integer> colleges = collegeApplications(input, GPA, SAT, ACT, extracurriculars, essayStrength);
         System.out.println();
     
-        simulateInterviewAndPrintResults(colleges, random, GPA, SAT, ACT, extracurriculars, essayStrength);
+        ArrayList<Double> interviewList = interviewList(colleges, random);
         System.out.println();
+
+        ArrayList<Double> admissionChanceList = new ArrayList<Double>();
+        admissionChanceList = printResults(colleges, GPA, SAT, ACT, extracurriculars, essayStrength, interviewList);
+        makeCollegeDecisions(colleges, name, admissionChanceList);
     
-        makeCollegeDecisions(colleges, name);
-    
+        System.out.println();
         System.out.println("Thank you for using the College Application Simulator!");
     }
     
@@ -169,19 +194,20 @@ public class CollegeSimulator {
             }
         } while (ACT < 0 || ACT > 36);
     
+        Random random = new Random();
+
         ArrayList<Integer> colleges = collegeApplications(input, GPA, SAT, ACT, extracurriculars, essayStrength);
         printProfile(name, GPA, essayStrength, extracurriculars, SAT, ACT);
     
-        System.out.println();
-        simulateInterviewAndPrintResults(colleges, new Random(), GPA, SAT, ACT, extracurriculars, essayStrength);
+        ArrayList<Double> interviewList = interviewList(colleges, random);
         System.out.println();
 
-        makeCollegeDecisions(colleges, name);
+        ArrayList<Double> admissionChanceList = new ArrayList<Double>();
+        admissionChanceList = printResults(colleges, GPA, SAT, ACT, extracurriculars, essayStrength, interviewList);
+        makeCollegeDecisions(colleges, name, admissionChanceList);
+
+        System.out.println();
         System.out.println("Thank you for using the College Application Simulator!");
-    }
-    
-    private static double simulateInterviewStrength(Random random) {
-        return Math.round((Math.max(random.nextDouble() * 10.0, random.nextDouble() * 10.0)) * 100.0) / 100.0;  // Simulate interview strength between 0.0 and 10.0
     }
 
     private static double inputDoubleRange(String prompt, double min, double max) {
@@ -262,6 +288,7 @@ public class CollegeSimulator {
                 System.out.print("Enter your option (a, b, or c): ");
                 System.out.println();
                 option = input.next().toLowerCase();
+                System.out.println();
             }
         if (option.equals("a")) {
             System.out.println("What school do you want to apply to? You can apply to " + collegesLeft + " more colleges. Type 'help' to find out colleges you can apply to, and type 'done' when you are done.");
@@ -342,7 +369,7 @@ public class CollegeSimulator {
         }
     }
 
-    private static String getCollegeById(int collegeId) {
+    public static String getCollegeById(int collegeId) {
         if (isValidCollegeId(collegeId)) {
             return collegeList.get(collegeId - 1);
         } else {
@@ -367,39 +394,62 @@ public class CollegeSimulator {
         Random random = new Random();
         
         // Add a bit of randomness (+- 1-2%)
-        double randomFactor = random.nextDouble() * 12 - 6;
+        double randomFactor = random.nextDouble() * 10 - 5;
         double modifiedChances = chances + randomFactor;
 
         // Check if the modified chances are greater than a random value between 0 and 100
         double yourFate = random.nextDouble() * 100;
-        if (modifiedChances > yourFate) {
-            return "Admitted";
+
+        if (modifiedChances > yourFate + 20) {
+            return "Very Large Admitted";
+        }
+        else if (modifiedChances > yourFate + 13) {
+            return "Large Admitted";
+        }
+        else if (modifiedChances > yourFate + 6) {
+            return "Medium Admitted";
+        }
+        else if (modifiedChances > yourFate) {
+            return "Close Admitted";
         }
         else if (modifiedChances + 10 > yourFate) {
             return "Waitlisted";
         }
-        else {
-            return "Rejected";
+        else if (modifiedChances + 15 > yourFate) {
+            return "Close Rejected";
         }
+        else if (modifiedChances + 22 > yourFate) {
+            return "Medium Rejected";
+        }
+        else if (modifiedChances + 28 > yourFate) {
+            return "Large Rejected";
+        }
+        else {
+            return "Very Large Rejected";
+        }
+
     }
 
-    private static void makeCollegeDecisions(ArrayList<Integer> colleges, String name) {
+    private static void makeCollegeDecisions(ArrayList<Integer> colleges, String name, ArrayList<Double> chances) {
         int[] collegeArray = new int[colleges.size()];
+        double[] chancesArray = new double[chances.size()];
 
         for (int i = 0; i < colleges.size(); i++) {
             collegeArray[i] = colleges.get(i);
+            chancesArray[i] = chances.get(i);
         }
 
-        collegeDecision(collegeArray, name);
+        collegeDecision(collegeArray, name, chancesArray);
     }
 
-    private static void collegeDecision(int[] colleges, String name) {
+    private static void collegeDecision(int[] colleges, String name, double[] chances) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<String> acceptedColleges = new ArrayList<>();
         ArrayList<String> waitlistColleges = new ArrayList<>();
     
-        for (int college : colleges) {
-            String collegeName = getCollegeById(college);
+        for (int i = 0; i < colleges.length; i++) {
+            String collegeName = getCollegeById(colleges[i]);
+            double chance = chances[i];
     
             System.out.println("Admissions decision for " + collegeName + " is in for " + name + ". Would you like to see the decision? (yes/no)");
     
@@ -410,21 +460,44 @@ public class CollegeSimulator {
                 System.out.println();
                 continue;
             }
+            else {
     
-            String result = collegeAdmission(college);
+            String result = collegeAdmission(chance);
+            System.out.println();
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
 
-            if (result.equals("Admitted")) {
-            System.out.println("Congratulations! You have been admitted to " + collegeName + "!");
-            acceptedColleges.add(collegeName);
+            if (result.equals("Very Large Admitted")) {
+                System.out.println("Congratulations! Your outstanding achievements have earned you a very large margin of admission to " + collegeName);
+                acceptedColleges.add(collegeName);
+            } else if (result.equals("Large Admitted")) {
+                System.out.println("Congratulations! Your exceptional achievements have secured a large margin of admission to " + collegeName);
+                acceptedColleges.add(collegeName);
+            } else if (result.equals("Medium Admitted")) {
+                System.out.println("Congratulations! Your application to " + collegeName + " has demonstrated significant merit, resulting in a successful admission.");
+                acceptedColleges.add(collegeName);
+            } else if (result.equals("Close Admitted")) {
+                System.out.println("Congratulations! Your application to " + collegeName + " has narrowly met our rigorous standards.");
+                acceptedColleges.add(collegeName);
             } else if (result.equals("Waitlisted")) {
-            System.out.println("Your application to " + collegeName + " is on the waitlist. There's a possibility of admission if spots become available.");
-            waitlistColleges.add(collegeName);
-        } else {
-            // Simulate rejection
-            System.out.println("We regret to inform you that your application to " + collegeName + " has been unsuccessful.");
-}
+                System.out.println("Your application to " + collegeName + " has been waitlisted. While we cannot offer admission at this moment, there may be an opportunity for you to join our community.");
+                waitlistColleges.add(collegeName);
+            } else if (result.equals("Close Rejected")) {
+                System.out.println("We regret to inform you that your application to " + collegeName + " narrowly missed our competitive standards.");
+            } else if (result.equals("Medium Rejected")) {
+                System.out.println("Thank you for your application to " + collegeName + ". Despite notable accomplishments, we are unable to offer admission.");
+            } else if (result.equals("Large Rejected")) {
+                System.out.println("We regret to inform you that your application to " + collegeName + " fell short of our standards.");
+            } else if (result.equals("Very Large Rejected")) {
+                System.out.println("We appreciate your interest in " + collegeName + ". Regrettably, your application did not align with our standards.");
+            }    
+            else {
+                System.out.println("Error: Your application was not successfully submitted.");
+            }
 
-System.out.println();
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
+        }        
+
+        System.out.println();
 
         }
     
@@ -487,10 +560,11 @@ System.out.println();
 System.out.println("You are now enrolled in " + acceptedColleges.get(myCollegeID - 1) + "! Congratulations!");
 System.out.println();
 
+scanner.close();
         
     }
 
-    private static int getCollegeIdByName(String collegeName) {
+    public static int getCollegeIdByName(String collegeName) {
     
         List<String> collegeList = Arrays.asList(
             "Massachusetts Institute of Technology (MIT)", "Harvard University", "Stanford University",

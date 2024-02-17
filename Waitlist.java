@@ -15,23 +15,51 @@ public class Waitlist {
             System.out.println("Results are in for " + college + " on the waitlist. Ready to proceed?");
             input.next();  // Consuming user input, assuming any input is valid
 
-            if (waitlistAdmitted()) {
-                System.out.println();
+            System.out.println();
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
+            if (waitlistAdmitted(CollegeSimulator.getCollegeIdByName(college))) {
                 System.out.println("Congratulations! You have been accepted off the waitlist for " + college + "!");
                 acceptedColleges.add(college);
-                System.out.println();
             } else {
-                System.out.println();
                 System.out.println("Unfortunately, you have been rejected from the waitlist for " + college + ".");
-                System.out.println();
             }
-        }
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
+            System.out.println();
+          }
 
+        input.close();
         return acceptedColleges;
     }
 
-    public static boolean waitlistAdmitted() {
-        double chances = 11 + Math.random() * 10 - 2.5;
+    public static boolean waitlistAdmitted(int college) {
+        double chances = 0;
+        if (college < 4) {
+            chances = 4 + Math.random() * 4 - 2;    
+        }
+        else if (college < 10) {
+             chances = 6 + Math.random() * 6 - 3;    
+        }
+        else if (college < 17) {
+             chances = 8 + Math.random() * 8 - 4;    
+        }
+        else if (college < 25) {
+             chances = 10 + Math.random() * 8 - 4;    
+        }
+        else if (college < 34) {
+             chances = 12.5 + Math.random() * 8 - 4;    
+        }
+        else if (college < 45) {
+             chances = 15 + Math.random() * 10 - 5;    
+        }
+        else if (college < 60) {
+             chances = 18 + Math.random() * 12 - 6;    
+        }
+        else if (college < 80) {
+             chances = 24 + Math.random() * 14 - 7;    
+        }
+        else {
+             chances = 30 + Math.random() * 16 - 8;
+        }
         return chances > Math.min(Math.random() * 100, Math.random() * 100);
     }
 }
