@@ -5,41 +5,107 @@ import java.util.List;
 import java.util.Random;
 
 public class CollegeSimulator {
-    private static List<String> collegeList = Arrays.asList(
-        "Massachusetts Institute of Technology (MIT)", "Harvard University", "Stanford University",
-            "University of California Berkeley (UCB)", "University of Chicago", "University of Pennsylvania",
-            "Cornell University", "California Institute of Technology (Caltech)", "Yale University",
-            "Princeton University", "Columbia University", "Johns Hopkins University",
-            "University of California, Los Angeles (UCLA)", "University of Michigan-Ann Arbor",
-            "New York University (NYU)", "Northwestern University", "Carnegie Mellon University",
-            "Duke University", "University of Texas at Austin", "University of California-San Diego (UCSD)",
-            "University of Washington", "University of Illinois at Urbana-Champaign", "Brown University",
-            "Pennsylvania State University", "Boston University", "Georgia Institute of Technology (Georgia Tech)",
-            "Purdue University", "University of Wisconsin-Madison", "University of Southern California",
-            "University of California, Davis (UCD)", "University of North Carolina--Chapel Hill",
-            "Texas A&M University", "Michigan State University", "Rice University", "Ohio State University",
-            "Washington University in St. Louis", "University of California, Santa Barbara (UCSB)",
-            "University of Florida", "University of Maryland, College Park", "Arizona State University",
-            "University of Minnesota, Twin Cities", "Emory University", "University of Pittsburgh",
-            "University of Rochester", "Dartmouth College", "University of Massachusetts, Amherst",
-            "Case Western Reserve University", "University of Virginia", "Vanderbilt University",
-            "University of Colorado at Boulder", "University of California-Irvine (UCI)",
-            "North Carolina State University", "University of Miami", "University of Arizona",
-            "Georgetown University", "Rutgers - The State University of New Jersey-New Brunswick",
-            "Virginia Polytechnic Institute (Virginia Tech)", "University of Notre Dame",
-            "Indiana University Bloomington", "University of Illinois, Chicago (UIC)",
-            "University of California, Santa Cruz (UCSC)", "George Washington University", "Yeshiva University",
-            "Northeastern University", "Tufts University", "University of Hawai'i at Manoa",
-            "Stony Brook University", "Iowa State University", "University of California, Riverside (UCR)",
-            "Colorado State University", "University of Kansas", "Washington State University", "University of Utah",
-            "University of Connecticut", "University of Tennessee, Knoxville", "Florida State University",
-            "Colorado School of Mines", "Illinois Institute of Technology", "Missouri University of Science and Technology",
-            "University at Buffalo SUNY", "University of Iowa", "Rensselaer Polytechnic Institute",
-            "University of Delaware", "Oregon State University", "University of Georgia", "University of Texas Dallas",
-            "City University of New York", "Lehigh University", "University of Nebraska - Lincoln",
-            "Florida International University", "University of South Florida", "University of South Carolina",
-            "University of Missouri, Columbia", "University of Central Florida", "Tulane University", "Drexel University",
-            "Stevens Institute of Technology", "Boston College"
+private static List<String> collegeList = Arrays.asList(
+        "Harvard University",
+    "Massachusetts Institute of Technology (MIT)",
+    "Stanford University",
+    "Yale University",
+    "Princeton University",
+    "Duke University",
+    "Columbia University",
+    "University of Pennsylvania (UPenn)",
+    "Northwestern University",
+    "Dartmouth College",
+    "Brown University",
+    "Vanderbilt University",
+    "Cornell University",
+    "University of Chicago (UChicago)",
+    "Rice University",
+    "California Institute of Technology (Caltech)",
+    "Washington University in St. Louis (WashU)",
+    "Johns Hopkins University (JHU)",
+    "University of California, Los Angeles (UCLA)",
+    "University of Southern California (USC)",
+    "University of Michigan",
+    "Georgetown University",
+    "University of Notre Dame",
+    "University of California, Berkeley",
+    "Emory University",
+    "Carnegie Mellon University (CMU)",
+    "Tufts University",
+    "University of North Carolina at Chapel Hill (UNC Chapel Hill)",
+    "University of Virginia (UVA)",
+    "University of Florida (UFlorida)",
+    "Georgia Institute of Technology (Georgia Tech)",
+    "New York University (NYU)",
+    "University of California, Davis (UCD)",
+    "University of California, San Diego (UCSD)",
+    "University of Illinois Urbana-Champaign (UIUC)",
+    "Boston College (BC)",
+    "University of Texas at Austin (UT Austin)",
+    "Wake Forest University",
+    "University of California, Santa Barbara (UCSB)",
+    "Boston University (BU)",
+    "College of William & Mary (W&M)",
+    "University of Wisconsin-Madison (UW Madison)",
+    "University of Washington, Seattle (UW Seattle)",
+    "Purdue University",
+    "University of Rochester",
+    "Lehigh University",
+    "University of California, Irvine (UCI)",
+    "University of Miami",
+    "Northeastern University",
+    "Texas A&M University",
+    "Case Western Reserve University",
+    "University of Maryland (UMD)",
+    "Santa Clara University (SCU)",
+    "Tulane University",
+    "George Washington University (GW)",
+    "University of Georgia (UGA)",
+    "Virginia Tech",
+    "University of Minnesota Twin Cities (UM Twin Cities)",
+    "Ohio State University (OSU)",
+    "Villanova University",
+    "Rensselaer Polytechnic Institute (RPI)",
+    "Southern Methodist University (SMU)",
+    "North Carolina State University (NCSU)",
+    "Brigham Young University (BYU)",
+    "Michigan State University (MSU)",
+    "Indiana University Bloomington (IU Bloomington)",
+    "University of Connecticut (UConn)",
+    "Brandeis University",
+    "Florida State University (FSU)",
+    "University of Pittsburgh (Pitt)",
+    "Loyola Marymount University",
+    "Worcester Polytechnic Institute (WPI)",
+    "Pennsylvania State University (PSU)",
+    "Pepperdine University",
+    "Syracuse University",
+    "Clemson University",
+    "University of Utah (UUtah)",
+    "University of Massachusetts Amherst (UMass Amherst)",
+    "University of Delaware (UDelaware)",
+    "State University of New York at Binghamton (SUNY Binghamton)",
+    "University of San Diego (USD)",
+    "State University of New York at Buffalo (SUNY Buffalo)",
+    "University of Iowa (UIowa)",
+    "Saint Louis University (SLU)",
+    "Yeshiva University",
+    "University of Arizona",
+    "Texas Christian University (TCU)",
+    "American University",
+    "Stevens Institute of Technology",
+    "Rutgers University",
+    "Drexel University",
+    "State University of New York at Stony Brook (SUNY Stony Brook)",
+    "University of Denver",
+    "Marquette University",
+    "Baylor University",
+    "Colorado School of Mines",
+    "University of Colorado Boulder (UC Boulder)",
+    "University of California, Riverside (UCR)",
+    "Creighton University",
+    "University of San Francisco (USF)"
     );
 
     public static void main(String[] args) {
@@ -278,62 +344,69 @@ public class CollegeSimulator {
         int collegesLeft = 12;
         String option = ""; 
 
-        while (collegesLeft > 0) {
-            if (collegesLeft == 12) {
-                System.out.println();
-                System.out.println("Choose an option for the regular decision applications process:");
-                System.out.println("a) Manually enter preferences");
-                System.out.println("b) Select random colleges");
-                System.out.println("c) Choose recommended colleges");
-                
-                System.out.print("Enter your option (a, b, or c): ");
-                System.out.println();
-                option = input.next().toLowerCase();
-                System.out.println();
-            }
-        if (option.equals("a")) {
-            System.out.println("What school do you want to apply to? You can apply to " + collegesLeft + " more colleges. Type 'help' to find out colleges you can apply to, and type 'done' when you are done.");
-            String userInput = input.next();
+        boolean displayMenu = true;
 
-            if (userInput.equalsIgnoreCase("help")) {
-                System.out.println();
-                System.out.println("List of Colleges:");
-                listColleges();
-                System.out.println();
-                continue;
-            }
+while (collegesLeft > 0) {
+    if (collegesLeft == 12 && displayMenu) {
+        System.out.println();
+        System.out.println("Choose an option for the regular decision applications process:");
+        System.out.println("a) Manually enter preferences");
+        System.out.println("b) Select random colleges");
+        System.out.println("c) Choose recommended colleges");
+        
+        System.out.print("Enter your option (a, b, or c): ");
+        System.out.println();
+        option = input.next().toLowerCase();
+        System.out.println();
+    }
+    
+    if (option.equals("a")) {
+        displayMenu = false;  // Reset the flag to display the menu next time
 
-            if (userInput.equalsIgnoreCase("done")) {
-                break;
-            }
+        System.out.println("What school do you want to apply to? You can apply to " + collegesLeft + " more colleges. Type 'help' to find out colleges you can apply to, and type 'done' when you are done.");
+        String userInput = input.next();
 
-            try {
-                int collegeId = Integer.parseInt(userInput);
-                if (isValidCollegeId(collegeId) && !colleges.contains(collegeId)) {
-                    colleges.add(collegeId);
-                    collegesLeft--;
-                    System.out.println("You have applied to: " + getCollegeById(collegeId));
-                    System.out.println();
-                } else {
-                    System.out.println("Invalid college ID or you have already applied to this college. Please choose a different college.");
-                    System.out.println();
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid college ID, type 'help' for assistance, or type 'done' to finish.");
-                System.out.println();
-            }
-
-            printAppliedColleges(colleges);
+        if (userInput.equalsIgnoreCase("help")) {
+            System.out.println();
+            System.out.println("List of Colleges:");
+            listColleges();
+            System.out.println();
+            continue;
         }
-    else if (option.equals("b")) {
+
+        if (userInput.equalsIgnoreCase("done")) {
+            break;
+        }
+
+        try {
+            int collegeId = Integer.parseInt(userInput);
+            if (isValidCollegeId(collegeId) && !colleges.contains(collegeId)) {
+                colleges.add(collegeId);
+                collegesLeft--;
+                System.out.println("You have applied to: " + getCollegeById(collegeId));
+                System.out.println();
+            } else {
+                System.out.println("Invalid college ID or you have already applied to this college. Please choose a different college.");
+                System.out.println();
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid college ID, type 'help' for assistance, or type 'done' to finish.");
+            System.out.println();
+        }
+
+        printAppliedColleges(colleges);
+    } else if (option.equals("b")) {
+        displayMenu = false;  // Don't display the menu when selecting random colleges
+
         ArrayList<Integer> coll = collegeApplicationSimulation(new Random());
         for (int college : coll) {
             colleges.add(college);
             collegesLeft--;
         }
         break;
-    }
-    else if (option.equals("c")) {
+    } else if (option.equals("c")) {
+        displayMenu = false;  // Don't display the menu when choosing recommended colleges
+
         ArrayList<Integer> rec = statsSimulator.recommendedColleges(GPA, SAT, ACT, essayStrength, extracurriculars);
         
         // Limit the number of recommended colleges to 12
@@ -349,15 +422,13 @@ public class CollegeSimulator {
         } else {
             System.out.println("No recommended colleges found. Please consider other options.");
         }
-    }
-    
-    else {
+    } else {
         System.out.println("Invalid option. Please restart the program and choose a valid option.");
     }
-
-    }
-    return colleges;
 }
+
+return colleges;
+    }
 
     private static ArrayList<Integer> collegeApplicationSimulation(Random random) {
         System.out.println();
@@ -584,40 +655,106 @@ public class CollegeSimulator {
     public static int getCollegeIdByName(String collegeName) {
     
         List<String> collegeList = Arrays.asList(
-            "Massachusetts Institute of Technology (MIT)", "Harvard University", "Stanford University",
-            "University of California Berkeley (UCB)", "University of Chicago", "University of Pennsylvania",
-            "Cornell University", "California Institute of Technology (Caltech)", "Yale University",
-            "Princeton University", "Columbia University", "Johns Hopkins University",
-            "University of California, Los Angeles (UCLA)", "University of Michigan-Ann Arbor",
-            "New York University (NYU)", "Northwestern University", "Carnegie Mellon University",
-            "Duke University", "University of Texas at Austin", "University of California-San Diego (UCSD)",
-            "University of Washington", "University of Illinois at Urbana-Champaign", "Brown University",
-            "Pennsylvania State University", "Boston University", "Georgia Institute of Technology (Georgia Tech)",
-            "Purdue University", "University of Wisconsin-Madison", "University of Southern California",
-            "University of California, Davis (UCD)", "University of North Carolina--Chapel Hill",
-            "Texas A&M University", "Michigan State University", "Rice University", "Ohio State University",
-            "Washington University in St. Louis", "University of California, Santa Barbara (UCSB)",
-            "University of Florida", "University of Maryland, College Park", "Arizona State University",
-            "University of Minnesota, Twin Cities", "Emory University", "University of Pittsburgh",
-            "University of Rochester", "Dartmouth College", "University of Massachusetts, Amherst",
-            "Case Western Reserve University", "University of Virginia", "Vanderbilt University",
-            "University of Colorado at Boulder", "University of California-Irvine (UCI)",
-            "North Carolina State University", "University of Miami", "University of Arizona",
-            "Georgetown University", "Rutgers - The State University of New Jersey-New Brunswick",
-            "Virginia Polytechnic Institute (Virginia Tech)", "University of Notre Dame",
-            "Indiana University Bloomington", "University of Illinois, Chicago (UIC)",
-            "University of California, Santa Cruz (UCSC)", "George Washington University", "Yeshiva University",
-            "Northeastern University", "Tufts University", "University of Hawai'i at Manoa",
-            "Stony Brook University", "Iowa State University", "University of California, Riverside (UCR)",
-            "Colorado State University", "University of Kansas", "Washington State University", "University of Utah",
-            "University of Connecticut", "University of Tennessee, Knoxville", "Florida State University",
-            "Colorado School of Mines", "Illinois Institute of Technology", "Missouri University of Science and Technology",
-            "University at Buffalo SUNY", "University of Iowa", "Rensselaer Polytechnic Institute",
-            "University of Delaware", "Oregon State University", "University of Georgia", "University of Texas Dallas",
-            "City University of New York", "Lehigh University", "University of Nebraska - Lincoln",
-            "Florida International University", "University of South Florida", "University of South Carolina",
-            "University of Missouri, Columbia", "University of Central Florida", "Tulane University", "Drexel University",
-            "Stevens Institute of Technology", "Boston College"
+            "Harvard University",
+    "Massachusetts Institute of Technology (MIT)",
+    "Stanford University",
+    "Yale University",
+    "Princeton University",
+    "Duke University",
+    "Columbia University",
+    "University of Pennsylvania (UPenn)",
+    "Northwestern University",
+    "Dartmouth College",
+    "Brown University",
+    "Vanderbilt University",
+    "Cornell University",
+    "University of Chicago (UChicago)",
+    "Rice University",
+    "California Institute of Technology (Caltech)",
+    "Washington University in St. Louis (WashU)",
+    "Johns Hopkins University (JHU)",
+    "University of California, Los Angeles (UCLA)",
+    "University of Southern California (USC)",
+    "University of Michigan",
+    "Georgetown University",
+    "University of Notre Dame",
+    "University of California, Berkeley",
+    "Emory University",
+    "Carnegie Mellon University (CMU)",
+    "Tufts University",
+    "University of North Carolina at Chapel Hill (UNC Chapel Hill)",
+    "University of Virginia (UVA)",
+    "University of Florida (UFlorida)",
+    "Georgia Institute of Technology (Georgia Tech)",
+    "New York University (NYU)",
+    "University of California, Davis (UCD)",
+    "University of California, San Diego (UCSD)",
+    "University of Illinois Urbana-Champaign (UIUC)",
+    "Boston College (BC)",
+    "University of Texas at Austin (UT Austin)",
+    "Wake Forest University",
+    "University of California, Santa Barbara (UCSB)",
+    "Boston University (BU)",
+    "College of William & Mary (W&M)",
+    "University of Wisconsin-Madison (UW Madison)",
+    "University of Washington, Seattle (UW Seattle)",
+    "Purdue University",
+    "University of Rochester",
+    "Lehigh University",
+    "University of California, Irvine (UCI)",
+    "University of Miami",
+    "Northeastern University",
+    "Texas A&M University",
+    "Case Western Reserve University",
+    "University of Maryland (UMD)",
+    "Santa Clara University (SCU)",
+    "Tulane University",
+    "George Washington University (GW)",
+    "University of Georgia (UGA)",
+    "Virginia Tech",
+    "University of Minnesota Twin Cities (UM Twin Cities)",
+    "Ohio State University (OSU)",
+    "Villanova University",
+    "Rensselaer Polytechnic Institute (RPI)",
+    "Southern Methodist University (SMU)",
+    "North Carolina State University (NCSU)",
+    "Brigham Young University (BYU)",
+    "Michigan State University (MSU)",
+    "Indiana University Bloomington (IU Bloomington)",
+    "University of Connecticut (UConn)",
+    "Brandeis University",
+    "Florida State University (FSU)",
+    "University of Pittsburgh (Pitt)",
+    "Loyola Marymount University",
+    "Worcester Polytechnic Institute (WPI)",
+    "Pennsylvania State University (PSU)",
+    "Pepperdine University",
+    "Syracuse University",
+    "Clemson University",
+    "University of Utah (UUtah)",
+    "University of Massachusetts Amherst (UMass Amherst)",
+    "University of Delaware (UDelaware)",
+    "State University of New York at Binghamton (SUNY Binghamton)",
+    "University of San Diego (USD)",
+    "State University of New York at Buffalo (SUNY Buffalo)",
+    "University of Iowa (UIowa)",
+    "Saint Louis University (SLU)",
+    "Yeshiva University",
+    "University of Arizona",
+    "Texas Christian University (TCU)",
+    "American University",
+    "Stevens Institute of Technology",
+    "Rutgers University",
+    "Drexel University",
+    "State University of New York at Stony Brook (SUNY Stony Brook)",
+    "University of Denver",
+    "Marquette University",
+    "Baylor University",
+    "Colorado School of Mines",
+    "University of Colorado Boulder (UC Boulder)",
+    "University of California, Riverside (UCR)",
+    "Creighton University",
+    "University of San Francisco (USF)"
         );
     
         int index = collegeList.indexOf(collegeName);
