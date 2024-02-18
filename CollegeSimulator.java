@@ -574,18 +574,17 @@ private static List<String> collegeList = Arrays.asList(
             }
 
             System.out.println("--------------------------------------------------------------------------------------------------------------");
+            System.out.println();
         }        
+    }
 
         System.out.println();
 
-        }
-    
         System.out.println();
         System.out.println("Accepted Colleges:");
         for (String college : acceptedColleges) {
             System.out.println(college);
         }
-
 
         System.out.println();
         System.out.println("Waitlisted Colleges:");
@@ -593,13 +592,13 @@ private static List<String> collegeList = Arrays.asList(
             System.out.println(college);
         }
 
-        if (waitlistColleges.size() > 0) {
-        ArrayList<String> combinedColleges = Waitlist.waitlistResults(waitlistColleges);
-        acceptedColleges.addAll(combinedColleges);
+        if (!waitlistColleges.isEmpty()) {
+            ArrayList<String> combinedColleges = Waitlist.waitlistResults(waitlistColleges);
+            acceptedColleges.addAll(combinedColleges);
         }
 
         System.out.println();
-        System.out.println("Accepted Colleges:");
+        System.out.println("Updated Accepted Colleges:");  // Change the label to indicate it's updated
         for (String college : acceptedColleges) {
             System.out.println(college);
         }
@@ -610,43 +609,47 @@ private static List<String> collegeList = Arrays.asList(
         System.out.println();
         System.out.println("Your College Admission Points: " + score);
         System.out.println("Your Average College Admission Points: " + avCAP);
-        
-        System.out.println();
-        
-        int myCollegeID = 0;
-    boolean validInput = false;
 
-    while (!validInput && !acceptedColleges.isEmpty()) {
-        System.out.println("Which college would you like to attend? Pick the position of the college on this list: " + acceptedColleges);
-    
-        // Check if the input is an integer
-        if (scanner.hasNextInt()) {
-            myCollegeID = scanner.nextInt();
-    
-            // Check if the input is within the bounds of the accepted colleges list
-            if (myCollegeID >= 1 && myCollegeID <= acceptedColleges.size()) {
-                validInput = true;  // Set the flag to exit the loop
-            } else {
-                System.out.println("Invalid input. Please enter a valid position from the list.");
-            }
-        } else {
-            System.out.println("Invalid input. Please enter a valid integer position from the list.");
-    
-            // Consume invalid input to avoid an infinite loop
-            scanner.nextLine(); // Change to nextLine() instead of next()
-        }
-    }
-    
-    
-    if (validInput) {
-        System.out.println("You are now enrolled in " + acceptedColleges.get(myCollegeID - 1) + "! Congratulations!");
         System.out.println();
-    } else {
-        System.out.println("No colleges available. Exiting the selection process.");
+
+        int myCollegeID = 0;
+        boolean validInput = false;
+
+        while (!validInput && !acceptedColleges.isEmpty()) {
+            System.out.println("Which college would you like to attend? Enter the position of the college on this list:");
+        
+            // Check if the input is an integer
+            if (scanner.hasNextInt()) {
+                myCollegeID = scanner.nextInt();
+        
+                // Consume the newline character after reading the integer
+                scanner.nextLine();
+        
+                // Check if the input is within the bounds of the accepted colleges list
+                if (myCollegeID >= 1 && myCollegeID <= acceptedColleges.size()) {
+                    validInput = true;  // Set the flag to exit the loop
+                } else {
+                    System.out.println("Invalid input. Please enter a valid position from the list.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer position from the list.");
+        
+                // Consume invalid input to avoid an infinite loop
+                scanner.nextLine();
+            }
+        }
+        
+
+if (validInput) {
+    System.out.println("You are now enrolled in " + acceptedColleges.get(myCollegeID - 1) + "! Congratulations!");
+    System.out.println();
+} else {
+    System.out.println("No colleges available. Exiting the selection process.");
+}
     }
     
-    // Remove the scanner.close() statement to avoid closing System.in
-    }    
+
+
 
     public static int getCollegeIdByName(String collegeName) {
     
