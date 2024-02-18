@@ -51,6 +51,17 @@ Choose a college to attend from the accepted list.
 ## Note
 This program is for educational and entertainment purposes only. Simulated admission chances and decisions are based on predefined algorithms and do not reflect real-world college admission processes.
 
+## Future Plans
+1. Add Early Decision option and Deferalls
+2. Add a Demographics section for Admission
+3. Add a Legacy option
+4. Ability to submit neiter ACT nor SAT
+5. Out of state colleges vs. In state colleges
+6. Fix the chances
+7. Fix too many application bug
+8. Fix recommended colleges bug
+9. Add Scholarships
+
 ## Author
 Me
 
