@@ -326,7 +326,6 @@ private static List<String> collegeList = Arrays.asList(
         return value;
     }
     
-
     private static void printProfile(String name, double GPA, double essayStrength, double extracurriculars, int SAT, int ACT) {
         System.out.println("STUDENT PROFILE");
         System.out.println("Name: " + name);
@@ -337,98 +336,95 @@ private static List<String> collegeList = Arrays.asList(
         System.out.println("ACT: " + (ACT != 0 ? ACT : "N/A"));
         System.out.println();
     }
-
+    
     private static ArrayList<Integer> collegeApplications(Scanner input, double GPA, int SAT, int ACT, double extracurriculars, double essayStrength) {
         System.out.println();
         ArrayList<Integer> colleges = new ArrayList<>();
         int collegesLeft = 12;
-        String option = ""; 
-
+        String option = "";
+    
         boolean displayMenu = true;
-
-while (collegesLeft > 0) {
-    if (collegesLeft == 12 && displayMenu) {
-        System.out.println();
-        System.out.println("Choose an option for the regular decision applications process:");
-        System.out.println("a) Manually enter preferences");
-        System.out.println("b) Select random colleges");
-        System.out.println("c) Choose recommended colleges");
-        
-        System.out.print("Enter your option (a, b, or c): ");
-        System.out.println();
-        option = input.next().toLowerCase();
-        System.out.println();
-    }
     
-    if (option.equals("a")) {
-        displayMenu = false;  // Reset the flag to display the menu next time
-
-        System.out.println("What school do you want to apply to? You can apply to " + collegesLeft + " more colleges. Type 'help' to find out colleges you can apply to, and type 'done' when you are done.");
-        String userInput = input.next();
-
-        if (userInput.equalsIgnoreCase("help")) {
-            System.out.println();
-            System.out.println("List of Colleges:");
-            listColleges();
-            System.out.println();
-            continue;
-        }
-
-        if (userInput.equalsIgnoreCase("done")) {
-            break;
-        }
-
-        try {
-            int collegeId = Integer.parseInt(userInput);
-            if (isValidCollegeId(collegeId) && !colleges.contains(collegeId)) {
-                colleges.add(collegeId);
-                collegesLeft--;
-                System.out.println("You have applied to: " + getCollegeById(collegeId));
+        while (collegesLeft > 0) {
+            if (collegesLeft == 12 && displayMenu) {
                 System.out.println();
+                System.out.println("Choose an option for the regular decision applications process:");
+                System.out.println("a) Manually enter preferences");
+                System.out.println("b) Select random colleges");
+                System.out.println("c) Choose recommended colleges");
+    
+                System.out.print("Enter your option (a, b, or c): ");
+                option = input.next().toLowerCase();
+                System.out.println();
+            }
+    
+            if (option.equals("a")) {
+                displayMenu = false;  // Reset the flag to display the menu next time
+    
+                System.out.println("What school do you want to apply to? You can apply to " + collegesLeft + " more colleges. Type 'help' to find out colleges you can apply to, and type 'done' when you are done.");
+                String userInput = input.next();
+    
+                if (userInput.equalsIgnoreCase("help")) {
+                    System.out.println();
+                    System.out.println("List of Colleges:");
+                    listColleges();
+                    System.out.println();
+                    continue;
+                }
+    
+                if (userInput.equalsIgnoreCase("done")) {
+                    break;
+                }
+    
+                try {
+                    int collegeId = Integer.parseInt(userInput);
+                    if (isValidCollegeId(collegeId) && !colleges.contains(collegeId)) {
+                        colleges.add(collegeId);
+                        collegesLeft--;
+                        System.out.println("You have applied to: " + getCollegeById(collegeId));
+                        System.out.println();
+                    } else {
+                        System.out.println("Invalid college ID or you have already applied to this college. Please choose a different college.");
+                        System.out.println();
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a valid college ID, type 'help' for assistance, or type 'done' to finish.");
+                    System.out.println();
+                }
+    
+                printAppliedColleges(colleges);
+            } else if (option.equals("b")) {
+                displayMenu = false;  // Don't display the menu when selecting random colleges
+    
+                ArrayList<Integer> coll = collegeApplicationSimulation(new Random());
+                for (int college : coll) {
+                    if (collegesLeft > 0) {
+                        colleges.add(college);
+                        collegesLeft--;
+                    } else {
+                        break;
+                    }
+                }
+            } else if (option.equals("c")) {
+                displayMenu = false;  // Don't display the menu when choosing recommended colleges
+    
+                ArrayList<Integer> rec = statsSimulator.recommendedColleges(GPA, SAT, ACT, essayStrength, extracurriculars);
+    
+                int size = Math.min(rec.size(), collegesLeft);  // Limit the size to available slots
+                for (int i = 0; i < size; i++) {
+                    colleges.add(rec.get(i));
+                    collegesLeft--;
+                }
             } else {
-                System.out.println("Invalid college ID or you have already applied to this college. Please choose a different college.");
-                System.out.println();
+                System.out.println("Invalid option. Please restart the program and choose a valid option.");
+                break;  // Terminate the loop if an invalid option is chosen
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a valid college ID, type 'help' for assistance, or type 'done' to finish.");
-            System.out.println();
         }
-
-        printAppliedColleges(colleges);
-    } else if (option.equals("b")) {
-        displayMenu = false;  // Don't display the menu when selecting random colleges
-
-        ArrayList<Integer> coll = collegeApplicationSimulation(new Random());
-        for (int college : coll) {
-            colleges.add(college);
-            collegesLeft--;
-        }
-        break;
-    } else if (option.equals("c")) {
-        displayMenu = false;  // Don't display the menu when choosing recommended colleges
-
-        ArrayList<Integer> rec = statsSimulator.recommendedColleges(GPA, SAT, ACT, essayStrength, extracurriculars);
-        
-        // Limit the number of recommended colleges to 12
-        int limit = Math.min(rec.size(), 12);
-        
-        if (limit > 0) {
-            ArrayList<Integer> limitedRec = new ArrayList<>(rec.subList(0, limit));
     
-            for (int college : limitedRec) {
-                colleges.add(college);
-                collegesLeft--;
-            }
-        } else {
-            System.out.println("No recommended colleges found. Please consider other options.");
-        }
-    } else {
-        System.out.println("Invalid option. Please restart the program and choose a valid option.");
+        return colleges;
     }
-}
-
-return colleges;
-    }
+    
+    
 
     private static ArrayList<Integer> collegeApplicationSimulation(Random random) {
         System.out.println();
