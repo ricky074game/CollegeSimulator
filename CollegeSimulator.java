@@ -617,14 +617,10 @@ private static List<String> collegeList = Arrays.asList(
 
         while (!validInput && !acceptedColleges.isEmpty()) {
             System.out.println("Which college would you like to attend? Enter the position of the college on this list:");
-        
+            String input = scanner.next();
             // Check if the input is an integer
-            if (scanner.hasNextInt()) {
-                myCollegeID = scanner.nextInt();
-        
-                // Consume the newline character after reading the integer
-                scanner.nextLine();
-        
+            if (input.matches("\\d+")) {
+                myCollegeID = Integer.parseInt(input);
                 // Check if the input is within the bounds of the accepted colleges list
                 if (myCollegeID >= 1 && myCollegeID <= acceptedColleges.size()) {
                     validInput = true;  // Set the flag to exit the loop
@@ -633,9 +629,6 @@ private static List<String> collegeList = Arrays.asList(
                 }
             } else {
                 System.out.println("Invalid input. Please enter a valid integer position from the list.");
-        
-                // Consume invalid input to avoid an infinite loop
-                scanner.nextLine();
             }
         }
         
